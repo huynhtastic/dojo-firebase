@@ -17,4 +17,4 @@ class Main extends StatelessWidget {
   }
 }
 
-void main() => runApp(AppAuthorization());
+void main() => runApp(Main());
