@@ -1,4 +1,4 @@
-package com.example.the_dojo
+package com.huynhtastic.the_dojo
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
