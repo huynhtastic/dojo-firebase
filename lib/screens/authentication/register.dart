@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:the_dojo/services/authentication.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final _auth = AuthenticationService();
   final _formKey = GlobalKey<FormState>();
 
@@ -24,13 +24,13 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign In To The Dojo'),
+        title: Text('Register for The Dojo'),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('Register'),
+            label: Text('Sign In'),
             onPressed: widget.toggleView,
-          ),
+          )
         ],
       ),
       body: Container(
@@ -48,23 +48,22 @@ class _SignInState extends State<SignIn> {
               TextFormField(
                 obscureText: true,
                 validator: (val) =>
-                    val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                    val.length < 6 ? 'Enter a password 6+ char long' : null,
                 onChanged: (val) => setState(() => password = val),
               ),
               SizedBox(height: 20),
               RaisedButton(
                 color: Colors.pink[400],
                 child: Text(
-                  'Sign In',
+                  'Register',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    final res =
-                        await _auth.signInEmailAndPassword(email, password);
+                    final res = await _auth.registerWithEmailAndPassword(
+                        email, password);
                     if (res == null) {
-                      setState(
-                          () => error = 'could not sign in with those creds');
+                      setState(() => error = 'Please supply a valid email');
                     }
                   }
                 },
@@ -80,18 +79,6 @@ class _SignInState extends State<SignIn> {
             ],
           ),
         ),
-
-        // RaisedButton(
-        //   child: Text('Sign in anon'),
-        //   onPressed: () async {
-        //     final res = await _auth.signInAnon();
-        //     if (res == null) {
-        //       print('sign in was null');
-        //     } else {
-        //       print('signed in');
-        //       print(res);
-        //     }
-        //   },
       ),
     );
   }
