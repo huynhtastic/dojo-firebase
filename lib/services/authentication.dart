@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:the_dojo/models/user.dart';
+import 'package:the_dojo/services/database.dart';
 
 class AuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -45,6 +46,8 @@ class AuthenticationService {
       final res = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       final user = res.user;
+      await DatabaseService(uid: user.uid)
+          .updateUserData('0', 'new dojo member', 100);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
